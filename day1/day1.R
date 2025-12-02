@@ -1,25 +1,20 @@
-library(tidyverse)
-
-get_password <- function(
-    file, 
-    print_info = FALSE
-  ) {
+get_password <- function(file_name, any_pass = F, verbose = F) {
   # read input
-  df <- 
-    read_csv(file, col_names = "turn", show_col_types = FALSE) |> 
-    mutate(
-      dir = substr(turn, 1, 1),
-      dist = parse_number(turn)
-    )
+  df <- read.csv(file_name, col.names = "turn", header = F) 
+  df$dir <- df$turn |> substr(1, 1)
+  df$dist <- df$turn |> substr(2, 100) |> as.integer()
   
   # turn dial 
   counter <- 0
   position <- 50
   previous_position <- 50
   for (i in seq_along(df$turn)) {
+    zeros <- 0
     turns_mod <- df$dist[i] %% 100
     # times passed 0 (hundreds)
-    zeros <- (df$dist[i] - turns_mod) / 100
+    if (any_pass) {
+      zeros <- (df$dist[i] - turns_mod) / 100
+    }
     
     if (df$dir[i] == "L") {     # left
       pos_tmp <- position - turns_mod
@@ -27,7 +22,7 @@ get_password <- function(
         position <- pos_tmp
       } else {                  # cross 0
         position <- pos_tmp + 100
-        if (previous_position != 0) {
+        if (any_pass & previous_position != 0) {
           zeros <- zeros + 1
         }
       }
@@ -37,25 +32,30 @@ get_password <- function(
         position <- pos_tmp
       } else {                  # cross 0
         position <- pos_tmp - 100
-        if (position != 0 & previous_position != 0) {
+        if (any_pass & position != 0 & previous_position != 0) {
           zeros <- zeros + 1
         }
       }
     }
+    # current position 0
+    zeros <- zeros + (position == 0) 
     
-    zeros <- zeros + (position == 0) # current position 0
-    if (print_info) {
+    # add zeros of current turn
+    counter <- counter + zeros
+    previous_position <- position 
+    if (verbose) {
       message(
         "Position after turn ", df$turn[i], ": ", position, 
         " (", zeros, " zeros)"
       )
     }
-    
-    counter <- counter + zeros
-    previous_position <- position 
   }
   message("The password is ", counter)
 }
 
-get_password("day1/input_example.txt", print_info = TRUE)
-get_password("day1/input.txt")
+# part 1
+get_password("day1/input_example.txt", any_pass = F, verbose = T)
+get_password("day1/input.txt", any_pass = F)
+# part 2
+get_password("day1/input_example.txt", any_pass = T, verbose = T)
+get_password("day1/input.txt", any_pass = T)
