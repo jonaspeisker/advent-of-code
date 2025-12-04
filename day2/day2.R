@@ -1,5 +1,9 @@
-invalid_id_sum <- function(file_name, pattern) {
-  input_raw <- readLines(file_name, warn = F) 
+invalid_id_sum <- function(
+    file_name="input_example.txt", 
+    path="../../Nextcloud/aoc25_inputs/day2/", 
+    part
+    ) {
+  input_raw <- readLines(paste0(path, file_name)) 
   # parse input
   input_sep <- strsplit(input_raw, ",")[[1]]
   input_sep2 <- strsplit(input_sep, "-") 
@@ -9,7 +13,7 @@ invalid_id_sum <- function(file_name, pattern) {
     unlist()                                       # vector
   # check for pattern
   invalid <- 
-    lapply(input, ifelse(pattern == "part1", check_part1, check_part2)) |> 
+    lapply(input, ifelse(part == 1, check_part1, check_part2)) |> 
     unlist()
   # sum invalid values
   return(input[invalid] |> sum())
@@ -59,11 +63,11 @@ check_part2(c(2, 1212, 9.394e+09))
 
 #### run ####
 # part 1
-invalid_id_sum("day2/input_example.txt", pattern="part1")
-invalid_id_sum("day2/input.txt", pattern="part1")
+invalid_id_sum("input_example.txt", part=1)
+invalid_id_sum("input.txt", part=1)
 # part 2
-invalid_id_sum("day2/input_example.txt", pattern="part2")
-invalid_id_sum("day2/input.txt", pattern="part2")
+invalid_id_sum("input_example.txt", part=2)
+invalid_id_sum("input.txt", part=2)
 # compare time
-invalid_id_sum("day2/input_example.txt", pattern="part1") |> system.time()
-invalid_id_sum("day2/input_example.txt", pattern="part2") |> system.time()
+invalid_id_sum("input_example.txt", part=1) |> system.time()
+invalid_id_sum("input_example.txt", part=2) |> system.time()

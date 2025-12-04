@@ -1,6 +1,8 @@
-file_name <- "day3/input_example.txt"
-largest_joltage <- function(file_name) {
-  input <- read.table(file_name, colClasses = "character")[,1]
+max_joltage <- function(
+    file_name="input_example.txt", 
+    path="../../Nextcloud/aoc25_inputs/day3/"
+    ) {
+  input <- readLines(paste0(path, file_name))
   split <- input |> strsplit("")
   max_joltage <- lapply(split, function(x){
     d1_ind <- x[-length(x)] |> which.max() # index of first max (not last)
@@ -10,8 +12,8 @@ largest_joltage <- function(file_name) {
   return(Reduce(sum, max_joltage))
 }
 
-largest_joltage("day3/input_example.txt")
-largest_joltage("day3/input.txt")
+max_joltage("input_example.txt")
+max_joltage("input.txt")
 
 
 x_ <- x[-x_len]                # first digits cannot be last

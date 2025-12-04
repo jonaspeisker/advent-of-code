@@ -1,6 +1,11 @@
-get_password <- function(file_name, any_pass = F, verbose = F) {
+get_password <- function(
+    file_name="input_example.txt", 
+    path="../../Nextcloud/aoc25_inputs/day1/", 
+    any_pass=F, 
+    verbose=F
+    ) {
   # read input
-  df <- read.csv(file_name, col.names = "turn", header = F) 
+  df <- read.table(paste0(path, file_name), col.names="turn") 
   df$dir <- df$turn |> substr(1, 1)
   df$dist <- df$turn |> substr(2, 100) |> as.integer()
   
@@ -54,8 +59,8 @@ get_password <- function(file_name, any_pass = F, verbose = F) {
 }
 
 # part 1
-get_password("day1/input_example.txt", any_pass = F, verbose = T)
-get_password("day1/input.txt", any_pass = F)
+get_password("input_example.txt", any_pass=F, verbose=T)
+get_password("input.txt", any_pass=F)
 # part 2
-get_password("day1/input_example.txt", any_pass = T, verbose = T)
-get_password("day1/input.txt", any_pass = T)
+get_password("input_example.txt", any_pass=T, verbose=T)
+get_password("input.txt", any_pass=T)
