@@ -14,10 +14,10 @@ accessible_rolls <- function(
     acc_rolls <- 1
     bin_tmp <- bin
     while (acc_rolls > 0) {
-      nb_sum <- neighbor_sum(bin_tmp)
+      nb_sum <- neighbor_sum(bin_tmp)             # matrix with number of nb
       acc_roll_mat <- (bin_tmp == 1 & nb_sum < 4) # rolls with <4 neighbors
-      acc_rolls <- sum(acc_roll_mat) # count accessible rolls 
-      bin_tmp[acc_roll_mat] <- 0 # remove accessible rolls
+      acc_rolls <- sum(acc_roll_mat)              # count accessible rolls 
+      bin_tmp[acc_roll_mat] <- 0                  # remove accessible rolls
     }
     return(sum(bin) - sum(bin_tmp))
   } else{
@@ -27,13 +27,11 @@ accessible_rolls <- function(
 }
 
 neighbor_sum <- function(mat) {
-  # pad with zeros
-  m <- rbind(0, mat, 0)
+  m <- rbind(0, mat, 0)   # pad with zeros
   m <- cbind(0, m, 0)
   nr <- nrow(m)
   nc <- ncol(m)
-  # Sum shifted versions
-  out <-
+  out <-                  # sum shifted mats  
     m[-c(nr,nr-1), -c(nc,nc-1)] + m[-c(nr,nr-1), -c(1,nc)] + m[-c(nr,nr-1), -c(1,2)] +
     m[-c(1,nr),    -c(nc,nc-1)] +                          + m[-c(1,nr),    -c(1,2)] +
     m[-c(1,2),     -c(nc,nc-1)] + m[-c(1,2),     -c(1,nc)] + m[-c(1,2),     -c(1,2)]

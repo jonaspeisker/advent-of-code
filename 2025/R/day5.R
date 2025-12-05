@@ -3,19 +3,18 @@ fresh_ingredients <- function(
     path="../../Nextcloud/aoc25_inputs/day5/",
     verbose=FALSE
 ) {
-  input <- readLines(paste0(path, file_name))
-  sep <- which(input == "")
+  input <- readLines(paste0(path, file_name)) # vector
+  sep <- which(input == "")                   # find separator
+  available <- input[(sep+1):length(input)] |> as.numeric()
   fresh_range <- input[1:(sep-1)] |> strsplit("-")
-  fresh <- 
-    lapply(fresh_range[3], function(x){
-      # x <- as.numeric(x)
-      x[1]:x[2]
-      }) |> 
-    unlist()
-  available <- input[(sep+1):length(input)]
   
-  available_fresh <- available %in% fresh
-  available_fresh_sum <- sum(available_fresh)
+  available_fresh <- 
+    lapply(fresh_range, function(x){
+      (available >= as.numeric(x)[1] & available <= as.numeric(x)[2])
+    }) 
+  any_fresh <- Reduce(`+`, available_fresh) # >0 if in at least 1 range of fresh ids
+  if (verbose) { message(any_fresh) }
+  available_fresh_sum <- sum(any_fresh > 0)
   message("Number of available fresh ingredients: ", available_fresh_sum)
 }
 
