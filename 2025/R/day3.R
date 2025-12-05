@@ -1,24 +1,28 @@
 max_joltage <- function(
     file_name="input_example.txt", 
-    path="../../Nextcloud/aoc25_inputs/day3/"
+    path="../../Nextcloud/aoc25_inputs/day3/",
+    batteries,
+    verbose=FALSE
     ) {
   input <- readLines(paste0(path, file_name))
-  split <- input |> strsplit("")
+  split <- input |> strsplit("")                     # list of vectors
   max_joltage <- lapply(split, function(x){
-    d1_ind <- x[-length(x)] |> which.max() # index of first max (not last)
-    d2 <- x[(d1_ind+1):length(x)] |> max() # max of remaining digits
-    max <- paste0(x[d1_ind], d2) |> as.integer() # paste back together
+    max <- NULL
+    for (i in (batteries-1):0) {
+      max_ind <- x[1:(length(x)-i)] |> which.max()
+      max <- c(max, x[max_ind])  # paste back together
+      x <- x[(max_ind+1):length(x)]  
+    }
+    if (verbose) { message(max) }
+    return(max |> paste0(collapse="") |> as.numeric())
   }) 
-  return(Reduce(sum, max_joltage))
+  joltage_sum <- Reduce(sum, max_joltage)
+  message("Total joltage is ", joltage_sum)
 }
 
-max_joltage("input_example.txt")
-max_joltage("input.txt")
-
-
-x_ <- x[-x_len]                # first digits cannot be last
-c1_ind <- which(x_ == max(x_)) # candidate indices of start values
-c2 <- sapply(c1_ind, function(i){
-  x[(i+1):x_len] |> max()      # max of remaining digits for each candidate
-})
-
+# part 1
+max_joltage("input_example.txt", batteries=2, verbose=T)
+max_joltage("input.txt", batteries=2)
+# part 2
+max_joltage("input_example.txt", batteries=12, verbose=T)
+max_joltage("input.txt", batteries=12)
