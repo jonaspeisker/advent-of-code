@@ -46,10 +46,10 @@ fresh_ranges <- function(
     stop  <- ranges[[i]][2]
     
     if (start <= current_stop + 1) {
-      # Overlapping or adjacent → extend
+      # Overlapping or adjacent, extend
       current_stop <- max(current_stop, stop)
     } else {
-      # Non-overlapping → save previous and start new
+      # Non-overlapping, save previous and start new
       ranges_merged <- c(ranges_merged, list(c(current_start, current_stop)))
       current_start <- start
       current_stop  <- stop
