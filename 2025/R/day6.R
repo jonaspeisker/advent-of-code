@@ -1,9 +1,8 @@
 # part 1
 grand_total_p1 <- function(
     file_name="input_example.txt", 
-    path="../../Nextcloud/aoc25_inputs/day6/",
-    verbose=FALSE
-) {
+    path="../../Nextcloud/aoc25_inputs/day6/"
+  ) {
   input <- read.table(paste0(path, file_name))
   # reduce cols with respective operator
   nr <- nrow(input)
@@ -11,20 +10,18 @@ grand_total_p1 <- function(
     op <- match.fun(input[nr, i])             # last row contains operator
     Reduce(op, as.numeric(input[1:(nr-1),i])) # others rows contain numbers
   })
-
-  grand_total <- sum(reduced)
-  message("The grand total is ", grand_total)
+  # return
+  message("The grand total is ", sum(reduced))
 }
 
-grand_total_p1("input_example.txt", verbose=T)
+grand_total_p1("input_example.txt")
 grand_total_p1("input.txt")
 
 # part 2
 grand_total_p2 <- function(
     file_name="input_example.txt", 
-    path="../../Nextcloud/aoc25_inputs/day6/",
-    verbose=FALSE
-) {
+    path="../../Nextcloud/aoc25_inputs/day6/"
+  ) {
   input <- # list of char vectors
     readLines(paste0(path, file_name)) |> 
     strsplit("")
@@ -48,10 +45,9 @@ grand_total_p2 <- function(
     op <- match.fun(op[i])
     Reduce(op, as.numeric(ceph[[i]]))
   })
-  
-  grand_total <- sum(reduced)
-  message("The grand total is ", grand_total)
+  # return
+  message("The grand total is ", sum(reduced))
 }
 
-grand_total_p2("input_example.txt", verbose=T)
+grand_total_p2("input_example.txt")
 grand_total_p2("input.txt")
