@@ -37,38 +37,31 @@ fresh_ranges <- function(
       order()
     ]
   
-  # i <- 2
-  ranges_combined <- NULL
-  for (i in 1:length(ranges)) {
-    if (verbose) { message("Range: ", i) }
+  ranges_merged <- list()
+  current_start <- ranges[[1]][1]
+  current_stop  <- ranges[[1]][2]
+  
+  for (i in 2:length(ranges)) {
     start <- ranges[[i]][1]
-    stop <- ranges[[i]][2]
-    if (i > 1) {
-      prev_start <- ranges[[i-1]][1]
-      prev_stop <- ranges[[i-1]][2]
-      stopifnot(start >= prev_start, start <= stop)
-    }
+    stop  <- ranges[[i]][2]
     
-    if (i == 1){
-      ranges_combined <- c(ranges_combined, ranges[i])
-      if (verbose) { message("Added first range.") }
-    } else if (stop <= prev_stop) {
-      if (verbose) { message("Skipping.") }
-    } else if (start > prev_stop) {
-      if (verbose) { message("Added full range.") }
-      ranges_combined <- c(ranges_combined, ranges[i])
-    } else if (start <= prev_stop) {
-      ranges_combined <- c(
-        ranges_combined, 
-        c(prev_stop + 1, stop) |> list()
-        )
-      if (verbose) { message("Added partial range.") }
+    if (start <= current_stop + 1) {
+      # Overlapping or adjacent → extend
+      current_stop <- max(current_stop, stop)
+    } else {
+      # Non-overlapping → save previous and start new
+      ranges_merged <- c(ranges_merged, list(c(current_start, current_stop)))
+      current_start <- start
+      current_stop  <- stop
     }
   }
-  if (verbose) { print(ranges_combined) }
+  
+  # Append final range
+  ranges_merged <- c(ranges_merged, list(c(current_start, current_stop)))
+  if (verbose) { print(ranges_merged) }
+  
+  sum_fresh_ids <- sum(sapply(ranges_merged, function(x) x[2] - x[1] + 1))
 
-  ranges_diff <- lapply(ranges_combined, function(x){ x[2]-x[1]+1 })
-  sum_fresh_ids <- Reduce(sum, ranges_diff)
   message("Number of fresh ids: ", sum_fresh_ids)
 }
 
