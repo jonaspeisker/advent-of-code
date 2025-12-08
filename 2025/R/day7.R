@@ -10,6 +10,7 @@ beam_splits <- function(
   n_cols <- length(input[[1]])
   beam_prev <- input[[1]] == "S"
   split_counter <- 0
+  beams <- beam_prev
   for (i in 2:length(input)) {
     # find splitting positions and count
     split_here <- (input[[i]] == "^") & beam_prev
@@ -23,10 +24,17 @@ beam_splits <- function(
     
     # save for next iteration
     beam_prev <- beam_next
+    beams <- rbind(beams, beam_prev)
   }
   
   message("The number of beam splits is ", split_counter)
+  invisible(beams)
 }
 
-beam_splits("input_example.txt")
+tree <- beam_splits("input_example.txt")
 beam_splits("input.txt")
+
+print_tree <- function(x) {
+  ifelse(tree, "|", ".")
+}
+print_tree(tree)

@@ -9,3 +9,4 @@
 1.  [Cafeteria](2025/R/day5.R)
 1.  [Trash Compactor](2025/R/day6.R)
 1.  [Laboratories](2025/R/day7.R)
+1.  [Playground](2025/R/day8.R)
