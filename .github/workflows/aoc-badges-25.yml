@@ -33,9 +33,9 @@ jobs:
           # Regular expression that finds the content of the day badge in your file.
           # dayRegex: '(?<=https:\/\/img\.shields\.io\/badge\/day%20📅-)[0-9]+(?=-blue)'
           # Regular expression that finds the content of the stars badge in your file.
-          starsRegex: '(?<=https:\/\/img\.shields\.io\/badge\/stars%20⭐-)[0-9]+(?=-yellow)' 
+          starsRegex: '(?<=https:\/\/img\.shields\.io\/badge\/stars%202025⭐-)[0-9]+(?=-yellow)' 
           # Regular expression that finds the content of the days completed badge iun your file.
-          daysCompletedRegex: '(?<=https:\/\/img\.shields\.io\/badge\/days%20completed-)[0-9]+(?=-red)'  
+          daysCompletedRegex: '(?<=https:\/\/img\.shields\.io\/badge\/days%20completed%202025✅-)[0-9]+(?=-red)'  
 
       # Step that pushes these local changes back to your github repo
       - uses: stefanzweifel/git-auto-commit-action@v4

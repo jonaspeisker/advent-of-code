@@ -1,8 +1,8 @@
 # 🎄 Advent of Code 🎄
 
 ## ❄️ 2025 ❄️ 
-![](https://img.shields.io/badge/stars%20⭐-16-yellow)
-![](https://img.shields.io/badge/days%20completed-7-red)
+![](https://img.shields.io/badge/stars%202025⭐-6-yellow)
+![](https://img.shields.io/badge/days%20completed%202025✅-2-red)
 
 1.  [Secret Entrance](2025/R/day1.R)
 1.  [Gift Shop](2025/R/day2.R)
