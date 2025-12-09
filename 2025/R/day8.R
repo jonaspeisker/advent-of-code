@@ -18,14 +18,14 @@ get_circuits <- function(
     c("b1_ind" = i[1], "b2_ind" = i[2], # b1,2: index of junctions box 
       "dist" = eucl_dist(input[i[1],], input[i[2],]))
   }) |> 
-    t() # rows to cols
+  t() # rows to cols
   # sort by ascending distance
   dists_ord <- dists[order(dists[,"dist"]),]
   
   # iterate over pairs
   circuits <- list(c(dists_ord[1,"b1_ind"], dists_ord[1,"b2_ind"]))
   boxes <- 1:nrow(input)
-  unconnected_boxes <- boxes[!(boxes %in% unlist(circuits))]
+  unconnected_boxes <- boxes[-1]
   for (i in 2:length(combs)) {
     if (verbose) {message(
       "Connection ", i, ":\n(", 
@@ -36,30 +36,35 @@ get_circuits <- function(
     )}
     # next closest boxes
     con <- c(dists_ord[i,"b1_ind"], dists_ord[i,"b2_ind"])
-    in_circuit <- sapply(circuits, function(x){
-      any(con %in% x)            # vector of circuits
+    con_in_circuit <- sapply(circuits, function(x){
+      con %in% x # boxes in rows, circuits in columns
     })
-    c_ind <- which(in_circuit)   # connects to which circuits
-    n_circuit <- length(c_ind)   # to how many circuits
-    if (n_circuit == 1) {        # add to circuit
-      circuits[[c_ind]] <- c(circuits[[c_ind]], con)
-    } else if (n_circuit == 2) { # merge circuits
-      circuits[[c_ind[1]]] <- c(circuits[[c_ind[1]]], circuits[[c_ind[2]]], con)
-      circuits[[c_ind[2]]] <- NULL
-    } else {                     # add new circuit
+    circ_ind <- 
+      apply(con_in_circuit, 2, function(x){ any(x) }) |> 
+      which()   # connects to which circuits
+    con_ind <- 
+      apply(con_in_circuit, 1, function(x){ !any(x) }) |> 
+      which()   # which boxes are not yet connected
+    n_circuit <- length(circ_ind)     # to how many circuits
+    if (n_circuit == 1) {             # add to circuit
+      circuits[[circ_ind]] <- c(circuits[[circ_ind]], con[con_ind])
+    } else if (n_circuit == 2) {      # merge circuits
+      circuits[[circ_ind[1]]] <- 
+        c(circuits[[circ_ind[1]]], circuits[[circ_ind[2]]], con[con_ind])
+      circuits[[circ_ind[2]]] <- NULL # remove other circuit
+    } else {                          # add new circuit
       circuits <- c(circuits, list(con))
     }
     
-    # solve part 1
+    # part 1: product of length of the three longest circuits
     if (i == connections) {
-      circuits_unq <- lapply(circuits, unique) # remove duplicate boxes
       # sort by descending length
-      len_srt <- sapply(circuits_unq, length) |> sort(decreasing=TRUE)
+      len_srt <- sapply(circuits, length) |> sort(decreasing=TRUE)
       # return product of three longest
       message("Result for part 1: ", Reduce(`*`, len_srt[1:3]))
     }
     
-    # solve part 2
+    # part 2: product of the x coords of boxes that create one circuit of all boxes
     unconnected_boxes <- unconnected_boxes[
       !(unconnected_boxes %in% unlist(circuits))]
     if (length(unconnected_boxes) == 0 & length(circuits) == 1) {
