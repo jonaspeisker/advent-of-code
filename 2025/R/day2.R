@@ -1,20 +1,23 @@
-invalid_id_sum <- function(
-    file_name="input_example.txt", 
-    path="../../Nextcloud/aoc25_inputs/day2/", 
-    part
-    ) {
-  input_raw <- readLines(paste0(path, file_name)) 
-  # parse input
-  input_sep <- strsplit(input_raw, ",")[[1]]
-  input_sep2 <- strsplit(input_sep, "-") 
+#### main ####
+d2 <- function(day=2, example=T, part) {
+  verbose <- example
+  input <- 
+    get_file_name(day, example) |>
+    readLines() |>   # single line
+    strsplit(",") |> # csv
+    unlist() |>      # only one element
+    strsplit("-")    # list of vectors
+  
   # expand sequence based on start and stop value
   input <- 
-    lapply(input_sep2, function(x) {x[1]:x[2]}) |> # list of vectors
-    unlist()                                       # vector
+    lapply(input, function(x) {x[1]:x[2]}) |> # list of vectors
+    unlist()                                  # vector
+  
   # check for pattern
   invalid <- 
     lapply(input, ifelse(part == 1, check_part1, check_part2)) |> 
     unlist()
+  
   # sum invalid values
   return(input[invalid] |> sum())
 }
@@ -63,11 +66,8 @@ check_part2(c(2, 1212, 9.394e+09))
 
 #### run ####
 # part 1
-invalid_id_sum("input_example.txt", part=1)
-invalid_id_sum("input.txt", part=1)
+d2(example=T, part=1)
+d2(example=F, part=1)
 # part 2
-invalid_id_sum("input_example.txt", part=2)
-invalid_id_sum("input.txt", part=2)
-# compare time
-invalid_id_sum("input_example.txt", part=1) |> system.time()
-invalid_id_sum("input_example.txt", part=2) |> system.time()
+d2(example=T, part=2)
+d2(example=F, part=2)

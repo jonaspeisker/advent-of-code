@@ -1,9 +1,10 @@
-# part 1
-grand_total_p1 <- function(
-    file_name="input_example.txt", 
-    path="../../Nextcloud/aoc25_inputs/day6/"
-  ) {
-  input <- read.table(paste0(path, file_name))
+#### part 1 ####
+d6p1 <- function(day=6, example=T) {
+  verbose <- example
+  input <- 
+    get_file_name(day, example) |>
+    read.table()
+  
   # reduce cols with respective operator
   nr <- nrow(input)
   reduced <- sapply(seq_len(ncol(input)), function(i) {
@@ -14,17 +15,17 @@ grand_total_p1 <- function(
   message("The grand total is ", sum(reduced))
 }
 
-grand_total_p1("input_example.txt")
-grand_total_p1("input.txt")
+d6p1(example=T)
+d6p1(example=F)
 
-# part 2
-grand_total_p2 <- function(
-    file_name="input_example.txt", 
-    path="../../Nextcloud/aoc25_inputs/day6/"
-  ) {
-  input <- # list of char vectors
-    readLines(paste0(path, file_name)) |> 
-    strsplit("")
+#### part 2 ####
+d6p2 <- function(day=6, example=T) {
+  verbose <- example
+  input <- 
+    get_file_name(day, example) |>
+    readLines() |> 
+    strsplit("") # list of char vectors
+  
   # matrix of digits and spaces
   nums <- do.call(rbind, input[1:(length(input)-1)])
   # vector of operators
@@ -49,5 +50,5 @@ grand_total_p2 <- function(
   message("The grand total is ", sum(reduced))
 }
 
-grand_total_p2("input_example.txt")
-grand_total_p2("input.txt")
+d6p2(example=T)
+d6p2(example=F)

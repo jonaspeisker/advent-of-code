@@ -1,27 +1,25 @@
-get_password <- function(
-    file_name="input_example.txt", 
-    path="../../Nextcloud/aoc25_inputs/day1/", 
-    any_pass=F, 
-    verbose=F
-    ) {
-  # read input
-  df <- read.table(paste0(path, file_name), col.names="turn") 
-  df$dir <- df$turn |> substr(1, 1)
-  df$dist <- df$turn |> substr(2, 100) |> as.integer()
+#### main ####
+d1 <- function(day=1, example=T, any_pass=F) {
+  verbose <- example
+  input <- 
+    get_file_name(day, example) |>
+    read.table(col.names="turn")
+  input$dir <- input$turn |> substr(1, 1) # direction
+  input$dist <- input$turn |> substr(2, 100) |> as.integer() # distance
   
   # turn dial 
   counter <- 0
   position <- 50
   previous_position <- 50
-  for (i in seq_along(df$turn)) {
+  for (i in seq_along(input$turn)) {
     zeros <- 0
-    turns_mod <- df$dist[i] %% 100
+    turns_mod <- input$dist[i] %% 100
     # times passed 0 (hundreds)
     if (any_pass) {
-      zeros <- (df$dist[i] - turns_mod) / 100
+      zeros <- (input$dist[i] - turns_mod) / 100
     }
     
-    if (df$dir[i] == "L") {     # left
+    if (input$dir[i] == "L") {     # left
       pos_tmp <- position - turns_mod
       if (pos_tmp >= 0) {       # not cross 0
         position <- pos_tmp
@@ -50,7 +48,7 @@ get_password <- function(
     previous_position <- position 
     if (verbose) {
       message(
-        "Position after turn ", df$turn[i], ": ", position, 
+        "Position after turn ", input$turn[i], ": ", position, 
         " (", zeros, " zeros)"
       )
     }
@@ -59,8 +57,8 @@ get_password <- function(
 }
 
 # part 1
-get_password("input_example.txt", any_pass=F, verbose=T)
-get_password("input.txt", any_pass=F)
+d1(example=T, any_pass=F)
+d1(example=F, any_pass=F)
 # part 2
-get_password("input_example.txt", any_pass=T, verbose=T)
-get_password("input.txt", any_pass=T)
+d1(example=T, any_pass=T)
+d1(example=F, any_pass=T)

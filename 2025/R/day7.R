@@ -1,9 +1,9 @@
-beam_splits <- function(
-    file_name="input_example.txt", 
-    path="../../Nextcloud/aoc25_inputs/day7/"
-) {
+#### part 1 ####
+d7p1 <- function(day=7, example=T) {
+  verbose <- example
   input <- 
-    readLines(paste0(path, file_name)) |> 
+    get_file_name(day, example) |>
+    readLines() |> 
     strsplit("")
   
   # iterate over rows
@@ -31,8 +31,8 @@ beam_splits <- function(
   invisible(beams)
 }
 
-tree <- beam_splits("input_example.txt")
-beam_splits("input.txt")
+tree <- d7p1(example=T)
+d7p1(example=F)
 
 print_tree <- function(x) {
   ifelse(tree, "|", ".")

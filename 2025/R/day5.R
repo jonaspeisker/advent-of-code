@@ -1,11 +1,11 @@
-# part 1
-fresh_ingredients <- function(
-    file_name="input_example.txt", 
-    path="../../Nextcloud/aoc25_inputs/day5/",
-    verbose=FALSE
-) {
-  input <- readLines(paste0(path, file_name)) # vector
-  sep <- which(input == "")                   # find separator
+#### part 1 ####
+d5p1 <- function(day=5, example=T) {
+  verbose <- example
+  input <- 
+    get_file_name(day, example) |>
+    readLines() # vector
+  
+  sep <- which(input == "") # find separator
   available <- input[(sep+1):length(input)] |> as.numeric()
   fresh_range <- input[1:(sep-1)] |> strsplit("-")
   
@@ -19,16 +19,16 @@ fresh_ingredients <- function(
   message("Number of available fresh ingredients: ", available_fresh_sum)
 }
 
-fresh_ingredients("input_example.txt", verbose=T)
-fresh_ingredients("input.txt")
+d5p1(example=T)
+d5p1(example=F)
 
-# part 2
-fresh_ranges <- function(
-    file_name="input_example.txt", 
-    path="../../Nextcloud/aoc25_inputs/day5/",
-    verbose=FALSE
-) {
-  input <- readLines(paste0(path, file_name))     # vector
+#### part 2 ####
+d5p2 <- function(day=5, example=T) {
+  verbose <- example
+  input <- 
+    get_file_name(day, example) |>
+    readLines()                                   # vector
+  
   sep <- which(input == "")                       # find separator
   ranges_raw <- input[1:(sep-1)] |> strsplit("-") # list of start and stop ids
   ranges_num <- lapply(ranges_raw, as.numeric)
@@ -65,5 +65,5 @@ fresh_ranges <- function(
   message("Number of fresh ids: ", sum_fresh_ids)
 }
 
-fresh_ranges("input_example.txt", verbose=T)
-fresh_ranges("input.txt")
+d5p2(example=T)
+d5p2(example=F)

@@ -1,16 +1,11 @@
-# euclidean distance 
-eucl_dist <- function(p, q) { # returns numeric
-  p <- as.numeric(p); q <- as.numeric(q)
-  sqrt((p[1]-q[1])^2 + (p[2]-q[2])^2 + (p[3]-q[3])^2)
-}
+#### main ####
+d8 <- function(day=8, example=T) {
+  verbose <- example
+  input <- 
+    get_file_name(day, example) |> 
+    read.csv(header=F)
+  connections <- ifelse(example, 10, 1000)
 
-get_circuits <- function(
-    file_name="input_example.txt", 
-    path="../../Nextcloud/aoc25_inputs/day8/",
-    connections=10,
-    verbose=FALSE
-) {
-  input <- read.csv(paste0(path, file_name), header=F)
   # get unique pairs of index 
   combs <- combn(nrow(input), 2)
   # compute distance
@@ -61,7 +56,7 @@ get_circuits <- function(
       # sort by descending length
       len_srt <- sapply(circuits, length) |> sort(decreasing=TRUE)
       # return product of three longest
-      message("Result for part 1: ", Reduce(`*`, len_srt[1:3]))
+      warning("Result for part 1: ", Reduce(`*`, len_srt[1:3]))
     }
     
     # part 2: product of the x coords of boxes that create one circuit of all boxes
@@ -70,11 +65,18 @@ get_circuits <- function(
     if (length(unconnected_boxes) == 0 & length(circuits) == 1) {
       prod_p2 <- as.numeric(input[dists_ord[i,"b1_ind"], 1]) * 
         input[dists_ord[i,"b2_ind"], 1]
-      message("Result for part 2: ", prod_p2)
+      warning("Result for part 2: ", prod_p2)
       return(invisible(prod_p2))
     } 
   } # end loop
 } 
 
-get_circuits()
-get_circuits("input.txt", connections=1000)
+#### euclidean distance #### 
+eucl_dist <- function(p, q) { # returns numeric
+  p <- as.numeric(p); q <- as.numeric(q)
+  sqrt((p[1]-q[1])^2 + (p[2]-q[2])^2 + (p[3]-q[3])^2)
+}
+
+#### run ####
+d8(example=T)
+d8(example=F)
