@@ -1,5 +1,5 @@
 #### part 1 ####
-d7p1 <- function(day=7, example=T) {
+d7p1 <- function(day = 7, example = TRUE) {
   verbose <- example
   input <- 
     get_file_name(day, example) |>
@@ -27,14 +27,12 @@ d7p1 <- function(day=7, example=T) {
     beams <- rbind(beams, beam_prev)
   }
   
-  message("The number of beam splits is ", split_counter)
-  invisible(beams)
+  if (verbose) {
+    print(ifelse(tree, "|", "."))
+  }
+  
+  return(split_counter)
 }
 
-tree <- d7p1(example=T)
-d7p1(example=F)
-
-print_tree <- function(x) {
-  ifelse(tree, "|", ".")
-}
-print_tree(tree)
+d7p1(example = TRUE) == 21
+d7p1(example = FALSE) == 1546

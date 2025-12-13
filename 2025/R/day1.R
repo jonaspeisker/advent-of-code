@@ -43,3 +43,8 @@ d1(example = FALSE, part = 1) == 1120
 # part 2
 d1(example = TRUE, part = 2) == 6
 d1(example = FALSE, part = 2) == 6554
+# benchmark
+microbenchmark(
+  d1(example = FALSE, part = 1), # 2.5 ms
+  d1(example = FALSE, part = 2)  # 2.8 ms
+)

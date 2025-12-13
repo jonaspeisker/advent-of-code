@@ -23,7 +23,7 @@ d2 <- function(day = 2, example = TRUE, part = 2, method = "regex") {
     
     # invalid if number is ONLY a sequence of digits repeated EXACTLY twice
     if (part == 1) {
-      if (method == "arithmetic"){       # 0.7 sec
+      if (method == "arithmetic"){
         d <- floor(log10(input_seq)) + 1
         half <- d / 2
         pow <- 10^half
@@ -32,22 +32,22 @@ d2 <- function(day = 2, example = TRUE, part = 2, method = "regex") {
         invalid <- (high == low)
       }
       
-      if (method == "string") {          # 1.6 sec
+      if (method == "string") {
         s <- as.character(input_seq)
         n <- nchar(s)
         half <- n / 2
         invalid <- substr(s, 1, half) == substr(s, half + 1, n)
       }
       
-      if (method == "regex"){            # 1.9 sec (faster with type conversion)
-        invalid <- grepl("^(.+)\\1$", as.character(input_seq))
+      if (method == "regex"){
+        invalid <- grepl("^(.+)\\1$", input_seq)
       }
     }
     
     # invalid if number is ONLY a sequence of digits repeated AT LEAST twice
     # check single value against sequence of given length
     if (part == 2) {
-      invalid <- grepl("^(.+)\\1+$", as.character(input_seq))
+      invalid <- grepl("^(.+)\\1+$", input_seq)
     }
     
     if (verbose) { cat("Invalid IDs: ", input_seq[invalid], "\n") }
@@ -60,17 +60,14 @@ d2 <- function(day = 2, example = TRUE, part = 2, method = "regex") {
 # part 1
 d2(example = TRUE, part = 1) == 1227775554
 d2(example = FALSE, part = 1) == 31839939622
-microbenchmark::microbenchmark(
-  d2(example = FALSE, part = 1, method = "arithmetic"),
-  d2(example = FALSE, part = 1, method = "string"),
-  d2(example = FALSE, part = 1, method = "regex"),
-  times = 5
-)
-
 # part 2
 d2(example = TRUE, part = 2) == 4174379265
 d2(example = FALSE, part = 2) == 41662374059
-microbenchmark::microbenchmark(
-  d2(example = FALSE, part = 2),
-  times = 5
+# benchmark
+microbenchmark(
+  d2(example = FALSE, part = 1, method = "arithmetic"), # 0.7 sec
+  d2(example = FALSE, part = 1, method = "string"),     # 1.6 sec
+  d2(example = FALSE, part = 1, method = "regex"),      # 2.0 sec
+  d2(example = FALSE, part = 2),                        # 2.0 sec
+  times = 10
 )

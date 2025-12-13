@@ -1,3 +1,5 @@
+library(microbenchmark)
+
 #### concatenate file name ####
 get_file_name <- function(day, example) {
   paste0(

@@ -1,9 +1,9 @@
 #### main ####
-d8 <- function(day=8, example=T) {
+d8 <- function(day = 8, example = TRUE, part = 1) {
   verbose <- example
   input <- 
     get_file_name(day, example) |> 
-    read.csv(header=F)
+    read.csv(header = FALSE)
   connections <- ifelse(example, 10, 1000)
 
   # get unique pairs of index 
@@ -52,11 +52,11 @@ d8 <- function(day=8, example=T) {
     }
     
     # part 1: product of length of the three longest circuits
-    if (i == connections) {
+    if (part == 1 & i == connections) {
       # sort by descending length
-      len_srt <- sapply(circuits, length) |> sort(decreasing=TRUE)
+      len_srt <- sapply(circuits, length) |> sort(decreasing = TRUE)
       # return product of three longest
-      warning("Result for part 1: ", Reduce(`*`, len_srt[1:3]))
+      return(Reduce(`*`, len_srt[1:3]))
     }
     
     # part 2: product of the x coords of boxes that create one circuit of all boxes
@@ -65,8 +65,7 @@ d8 <- function(day=8, example=T) {
     if (length(unconnected_boxes) == 0 & length(circuits) == 1) {
       prod_p2 <- as.numeric(input[dists_ord[i,"b1_ind"], 1]) * 
         input[dists_ord[i,"b2_ind"], 1]
-      warning("Result for part 2: ", prod_p2)
-      return(invisible(prod_p2))
+      return(prod_p2)
     } 
   } # end loop
 } 
@@ -78,5 +77,15 @@ eucl_dist <- function(p, q) { # returns numeric
 }
 
 #### run ####
-d8(example=T)
-d8(example=F)
+# part 1
+d8(example = TRUE, part = 1) == 40
+d8(example = FALSE, part = 1) == 32103
+# part 2
+d8(example = TRUE, part = 2) == 25272
+d8(example = FALSE, part = 2) == 8133642976
+# benchmark
+microbenchmark(
+  d8(example = FALSE, part = 1),
+  d8(example = FALSE, part = 2),
+  times = 5
+)

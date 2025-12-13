@@ -1,9 +1,10 @@
 #### part 1 ####
-d6p1 <- function(day=6, example=T) {
+d6p1 <- function(day = 6, example = TRUE) {
   verbose <- example
   input <- 
     get_file_name(day, example) |>
-    read.table()
+    read.table() |> 
+    as.matrix()
   
   # reduce cols with respective operator
   nr <- nrow(input)
@@ -11,25 +12,26 @@ d6p1 <- function(day=6, example=T) {
     op <- match.fun(input[nr, i])             # last row contains operator
     Reduce(op, as.numeric(input[1:(nr-1),i])) # others rows contain numbers
   })
-  # return
-  message("The grand total is ", sum(reduced))
+  return(sum(reduced))
 }
 
-d6p1(example=T)
-d6p1(example=F)
+d6p1(example = TRUE) == 4277556
+d6p1(example = FALSE) == 4693159084994
 
 #### part 2 ####
-d6p2 <- function(day=6, example=T) {
+d6p2 <- function(day = 6, example = TRUE) {
   verbose <- example
   input <- 
     get_file_name(day, example) |>
     readLines() |> 
     strsplit("") # list of char vectors
-  
+  n_row <- length(input)
   # matrix of digits and spaces
-  nums <- do.call(rbind, input[1:(length(input)-1)])
-  # vector of operators
-  op_raw <- input[[length(input)]]
+  nums <- 
+    input[1:(n_row-1)] |> 
+    do.call(what = rbind)
+  # vector of operators in last row
+  op_raw <- input[[n_row]]
   op <- op_raw[op_raw != " "]
   # paste together columns
   ceph_raw <- apply(nums, 2, function(col) {
@@ -46,9 +48,14 @@ d6p2 <- function(day=6, example=T) {
     op <- match.fun(op[i])
     Reduce(op, as.numeric(ceph[[i]]))
   })
-  # return
-  message("The grand total is ", sum(reduced))
+  return(sum(reduced))
 }
 
-d6p2(example=T)
-d6p2(example=F)
+d6p2(example = TRUE) == 3263827
+d6p2(example = FALSE) == 11643736116335
+
+# benchmark
+microbenchmark(
+  d6p1(example = FALSE), # 38.1 ms
+  d6p2(example = FALSE)  # 24.0 ms
+)

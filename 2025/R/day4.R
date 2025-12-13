@@ -1,16 +1,16 @@
 #### main ####
-d4 <- function(day=4, example=T, recursive=F) {
+d4 <- function(day = 4, example = TRUE, recursive = FALSE) {
   verbose <- example
   input <- 
     get_file_name(day, example) |>
     readLines() |>
     strsplit("")
+  bin <- # convert to binary matrix
+    lapply(input, function(x) { as.integer(x == "@") }) |> 
+    do.call(what = rbind)
   
-  bin <- sapply(input, function(x){
-    ifelse(x == "@", 1, 0) }) |> 
-    t()
   if (recursive) {
-    acc_rolls <- 1
+    acc_rolls <- 1L
     bin_tmp <- bin
     while (acc_rolls > 0) {
       nb_sum <- neighbor_sum(bin_tmp)             # matrix with number of nb
@@ -38,8 +38,13 @@ neighbor_sum <- function(mat) {
 
 #### run ####
 #part 1
-d4(example=T)
-d4(example=F)
+d4(example = TRUE) == 13
+d4(example = FALSE) == 1516
 #part 2
-d4(example=T, recursive=T)
-d4(example=F, recursive=T)
+d4(example = TRUE, recursive = TRUE) == 43
+d4(example = FALSE, recursive = TRUE) == 9122
+# benchmark
+microbenchmark(
+  d4(example = FALSE, recursive = FALSE), #  2.1 ms
+  d4(example = FALSE, recursive = TRUE)   # 70.5 ms
+)
