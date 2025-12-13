@@ -1,12 +1,16 @@
-#### main ####
-d2 <- function(day = 2, example = TRUE, part = 2, method = "regex") {
+# https://adventofcode.com/2025/day/2
+
+d2 <- function(
+    day = 2, year = 2025, example = TRUE, 
+    part = 1, method = "regex"
+  ) {
   stopifnot(
     part %in% 1:2,
     method %in% c("arithmetic", "string", "regex")
   )
   verbose <- example
   input <- 
-    get_file_name(day, example) |>
+    get_file_name(day, year, example) |>
     readLines() |>                 # single line
     strsplit(",") |>               # csv
     unlist() |>                    # unlist list of length 1

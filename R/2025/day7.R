@@ -1,8 +1,11 @@
+# https://adventofcode.com/2025/day/7
+
 #### part 1 ####
-d7p1 <- function(day = 7, example = TRUE) {
+# How many times will the beam be split?
+d7p1 <- function(day = 7, year = 2025, example = TRUE) {
   verbose <- example
   input <- 
-    get_file_name(day, example) |>
+    get_file_name(day, year, example) |>
     readLines() |> 
     strsplit("")
   

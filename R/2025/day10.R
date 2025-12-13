@@ -1,8 +1,12 @@
+# https://adventofcode.com/2025/day/10
+
 #### part 1 ####
-d10p1 <- function(day = 10, example = TRUE) {
+# What is the fewest button presses required to correctly configure
+# the indicator lights on all of the machines?
+d10p1 <- function(day = 10, year = 2025, example = TRUE) {
   verbose <- example
   input <- 
-    get_file_name(day, example) |>
+    get_file_name(day, year, example) |>
     readLines() |> 
     strsplit(" ")
   n_machines <- length(input)
@@ -73,8 +77,8 @@ d10p1 <- function(day = 10, example = TRUE) {
     n <- n + 1 # try out one button press more
   }
   
-  message("The fewest number of presses is: ", sum(correct_n_presses))
+  return(sum(correct_n_presses))
 }
 
-d10p1(example = TRUE)
+d10p1(example = TRUE) == 7
 d10p1(example = FALSE)

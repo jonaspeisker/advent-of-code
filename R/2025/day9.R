@@ -1,8 +1,12 @@
+# https://adventofcode.com/2025/day/9
+
 #### part 1 ####
-d9p1 <- function(day = 9, example = TRUE, use_hull = TRUE) {
+# Using two red tiles as opposite corners, 
+# what is the largest area of any rectangle you can make?
+d9p1 <- function(day = 9, year = 2025, example = TRUE, use_hull = TRUE) {
   verbose <- example
   input <- 
-    get_file_name(day, example) |>
+    get_file_name(day, year, example) |>
     read.csv(header=F, col.names = c("x", "y"))
   
   if (use_hull){ 

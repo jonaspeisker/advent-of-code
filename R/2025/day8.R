@@ -1,8 +1,9 @@
-#### main ####
-d8 <- function(day = 8, example = TRUE, part = 1) {
+# https://adventofcode.com/2025/day/8
+
+d8 <- function(day = 8, year = 2025, example = TRUE, part = 1) {
   verbose <- example
   input <- 
-    get_file_name(day, example) |> 
+    get_file_name(day, year, example) |> 
     read.csv(header = FALSE)
   connections <- ifelse(example, 10, 1000)
 
@@ -60,13 +61,15 @@ d8 <- function(day = 8, example = TRUE, part = 1) {
     }
     
     # part 2: product of the x coords of boxes that create one circuit of all boxes
-    unconnected_boxes <- unconnected_boxes[
-      !(unconnected_boxes %in% unlist(circuits))]
-    if (length(unconnected_boxes) == 0 & length(circuits) == 1) {
-      prod_p2 <- as.numeric(input[dists_ord[i,"b1_ind"], 1]) * 
-        input[dists_ord[i,"b2_ind"], 1]
-      return(prod_p2)
-    } 
+    if (part == 2) {
+      unconnected_boxes <- unconnected_boxes[
+        !(unconnected_boxes %in% unlist(circuits))]
+      if (length(unconnected_boxes) == 0 & length(circuits) == 1) {
+        prod_p2 <- as.numeric(input[dists_ord[i,"b1_ind"], 1]) * 
+          input[dists_ord[i,"b2_ind"], 1]
+        return(prod_p2)
+      } 
+    }
   } # end loop
 } 
 

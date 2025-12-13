@@ -1,9 +1,9 @@
 library(microbenchmark)
 
 #### concatenate file name ####
-get_file_name <- function(day, example) {
+get_file_name <- function(day, year, example) {
   paste0(
-    "../../Nextcloud/aoc25_inputs/day", day, "/input",
+    "../../Nextcloud/aoc_inputs/", year, "/day", day, "/input",
     ifelse(example, "_example", ""), ".txt"
   )
 }

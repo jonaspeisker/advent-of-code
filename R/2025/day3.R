@@ -1,14 +1,16 @@
-#### main ####
-d3 <- function(day = 3, example = TRUE, batteries) {
+# https://adventofcode.com/2025/day/3
+
+d3 <- function(day = 3, year = 2025, example = TRUE, pick_n) {
   verbose <- example
   input <- 
-    get_file_name(day, example) |>
+    get_file_name(day, year, example) |>
     readLines() |> 
     strsplit("") # list of vectors
   
+  # pick n batteries to produce the largest number
   max_joltage <- lapply(input, function(x){
     max <- NULL
-    for (i in (batteries-1):0) {
+    for (i in (pick_n-1):0) {
       # find index of first maximum, reserving the minimum number of digits 
       # at the end that are necessary to fill the remaining digits i
       x_len <- length(x)

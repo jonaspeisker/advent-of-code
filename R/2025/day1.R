@@ -1,13 +1,13 @@
+# https://adventofcode.com/2025/day/1
+
 d1 <- function(
-    day = 1, 
-    example = TRUE, 
-    start_pos = 50, 
-    part = 1
+    day = 1, year = 2025, example = TRUE, 
+    start_pos = 50, part = 1
   ) {
   stopifnot(part %in% 1:2, is.numeric(start_pos))
   verbose <- example
   turns <- # vector
-    get_file_name(day, example) |> 
+    get_file_name(day, year, example) |> 
     readLines()
   dist_full <- turns |> substr(2, 100) |> as.integer() # distance
   dist_mod  <- dist_full %% 100 # remainder of division by 100
@@ -25,9 +25,11 @@ d1 <- function(
   # count zeros
   is_zero <- dial_pos == 0              # is current position zero
   was_zero <- is_zero[-length(is_zero)] # was previous position zero
+  # How many turns end at 0?
   if (part == 1) {
     return(sum(is_zero))
   }
+  # How many times does the dial point at 0, including the rotations?
   if (part == 2) {
     crosses_zero <- 
       ( turn_left & turn_raw < 0   & !was_zero & !is_zero[-1]) | 

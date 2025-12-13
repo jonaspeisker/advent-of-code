@@ -1,14 +1,18 @@
+# https://adventofcode.com/2025/day/6
+
 #### part 1 ####
-d6p1 <- function(day = 6, example = TRUE) {
+# What is the grand total found by adding together all of
+# the answers to the individual problems?
+d6p1 <- function(day = 6, year = 2025, example = TRUE) {
   verbose <- example
   input <- 
-    get_file_name(day, example) |>
+    get_file_name(day, year, example) |>
     read.table() |> 
     as.matrix()
   
-  # reduce cols with respective operator
   nr <- nrow(input)
   reduced <- sapply(seq_len(ncol(input)), function(i) {
+    # reduce cols with respective operator
     op <- match.fun(input[nr, i])             # last row contains operator
     Reduce(op, as.numeric(input[1:(nr-1),i])) # others rows contain numbers
   })
@@ -19,15 +23,16 @@ d6p1(example = TRUE) == 4277556
 d6p1(example = FALSE) == 4693159084994
 
 #### part 2 ####
+# Cephalopod math
 d6p2 <- function(day = 6, example = TRUE) {
   verbose <- example
   input <- 
     get_file_name(day, example) |>
     readLines() |> 
     strsplit("") # list of char vectors
+  
   n_row <- length(input)
-  # matrix of digits and spaces
-  nums <- 
+  nums <- # matrix of digits and spaces
     input[1:(n_row-1)] |> 
     do.call(what = rbind)
   # vector of operators in last row
