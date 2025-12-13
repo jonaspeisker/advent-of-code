@@ -1,73 +1,76 @@
 #### main ####
-d2 <- function(day=2, example=T, part) {
+d2 <- function(day = 2, example = TRUE, part = 2, method = "regex") {
+  stopifnot(
+    part %in% 1:2,
+    method %in% c("arithmetic", "string", "regex")
+  )
   verbose <- example
   input <- 
     get_file_name(day, example) |>
-    readLines() |>   # single line
-    strsplit(",") |> # csv
-    unlist() |>      # only one element
-    strsplit("-")    # list of vectors
+    readLines() |>                 # single line
+    strsplit(",") |>               # csv
+    unlist() |>                    # unlist list of length 1
+    strsplit("-") |>               # list of vectors
+    do.call(what = rbind)          # bind to array
+  storage.mode(input) <- "numeric" # type convert
   
-  # expand sequence based on start and stop value
-  input <- 
-    lapply(input, function(x) {x[1]:x[2]}) |> # list of vectors
-    unlist()                                  # vector
+  # iterate over ranges
+  sum_invalid <- 0
+  for (i in seq_len(nrow(input))) {
+    # faster to expand each range separately in for loop than expanding all
+    # at once due to more efficient memory allocation
+    input_seq <- input[i, 1]:input[i, 2]
+    
+    # invalid if number is ONLY a sequence of digits repeated EXACTLY twice
+    if (part == 1) {
+      if (method == "arithmetic"){       # 0.7 sec
+        d <- floor(log10(input_seq)) + 1
+        half <- d / 2
+        pow <- 10^half
+        high <- input_seq %/% pow
+        low  <- input_seq %% pow
+        invalid <- (high == low)
+      }
+      
+      if (method == "string") {          # 1.6 sec
+        s <- as.character(input_seq)
+        n <- nchar(s)
+        half <- n / 2
+        invalid <- substr(s, 1, half) == substr(s, half + 1, n)
+      }
+      
+      if (method == "regex"){            # 1.9 sec (faster with type conversion)
+        invalid <- grepl("^(.+)\\1$", as.character(input_seq))
+      }
+    }
+    
+    # invalid if number is ONLY a sequence of digits repeated AT LEAST twice
+    # check single value against sequence of given length
+    if (part == 2) {
+      invalid <- grepl("^(.+)\\1+$", as.character(input_seq))
+    }
+    
+    if (verbose) { cat("Invalid IDs: ", input_seq[invalid], "\n") }
+    sum_invalid <- sum_invalid + sum(input_seq[invalid])
+  }
   
-  # check for pattern
-  invalid <- 
-    lapply(input, ifelse(part == 1, check_part1, check_part2)) |> 
-    unlist()
-  
-  # sum invalid values
-  return(input[invalid] |> sum())
+  return(sum_invalid)
 }
 
-#### part 1 ####
-# check if number is ONLY a sequence of digits repeated EXACTLY twice
-check_part1 <- function(values) { # vector
-  digits <- nchar(values)
-  ifelse(
-    digits %% 2 != 0 | digits == 1, # if has odd number of digits or single digit
-    FALSE,                          # always FALSE
-    # else compare first half with second half
-    substr(values, 1, digits/2) == substr(values, digits/2+1, digits)
-  )
-}
-check_part1(c(2, 1212, 9.394e+09))
-
-#### part 2 ####
-# check if number is ONLY a sequence of digits repeated AT LEAST twice
-# check single value against sequence of given length
-# sl: sequence length, v: value, d: digits
-test_seq <- function(sl, v, d) { 
-  test <- 
-    Reduce(
-      paste0, 
-      rep(substr(v, 1, sl), times=d/sl)
-    )
-  return(v == test)
-}
-
-check_part2 <- function(values) { # vector
-  sapply(values, function(value){
-    digits <- nchar(value)
-    if (digits == 1) {return(FALSE)}
-    # seq has to occur at least 2x
-    max_seq_length <- floor(digits/2)
-    invalid <- Reduce(
-      any, 
-      # iterate over seq length
-      lapply(1:max_seq_length, test_seq, v=value, d=digits)
-    )
-    return(invalid)
-  })
-}
-check_part2(c(2, 1212, 9.394e+09))
-
-#### run ####
 # part 1
-d2(example=T, part=1)
-d2(example=F, part=1)
+d2(example = TRUE, part = 1) == 1227775554
+d2(example = FALSE, part = 1) == 31839939622
+microbenchmark::microbenchmark(
+  d2(example = FALSE, part = 1, method = "arithmetic"),
+  d2(example = FALSE, part = 1, method = "string"),
+  d2(example = FALSE, part = 1, method = "regex"),
+  times = 5
+)
+
 # part 2
-d2(example=T, part=2)
-d2(example=F, part=2)
+d2(example = TRUE, part = 2) == 4174379265
+d2(example = FALSE, part = 2) == 41662374059
+microbenchmark::microbenchmark(
+  d2(example = FALSE, part = 2),
+  times = 5
+)
