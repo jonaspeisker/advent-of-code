@@ -5,10 +5,7 @@
 # the answers to the individual problems?
 d6p1 <- function(day = 6, year = 2025, example = TRUE) {
   verbose <- example
-  input <- 
-    get_file_name(day, year, example) |>
-    read.table() |> 
-    as.matrix()
+  input <- read_table(day, year, example) 
   
   nr <- nrow(input)
   reduced <- sapply(seq_len(ncol(input)), function(i) {
@@ -24,12 +21,9 @@ d6p1(example = FALSE) == 4693159084994
 
 #### part 2 ####
 # Cephalopod math
-d6p2 <- function(day = 6, example = TRUE) {
+d6p2 <- function(day = 6, year = 2025, example = TRUE) {
   verbose <- example
-  input <- 
-    get_file_name(day, example) |>
-    readLines() |> 
-    strsplit("") # list of char vectors
+  input <- read_split(day, year, example)  # list of char vectors
   
   n_row <- length(input)
   nums <- # matrix of digits and spaces

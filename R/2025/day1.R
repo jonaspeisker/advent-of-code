@@ -6,9 +6,8 @@ d1 <- function(
   ) {
   stopifnot(part %in% 1:2, is.numeric(start_pos))
   verbose <- example
-  turns <- # vector
-    get_file_name(day, year, example) |> 
-    readLines()
+  turns <- read_input(day, year, example) # vector
+    
   dist_full <- turns |> substr(2, 100) |> as.integer() # distance
   dist_mod  <- dist_full %% 100 # remainder of division by 100
   turn_left <- substr(turns, 1, 1) == "L" # direction 

@@ -2,10 +2,8 @@
 
 d8 <- function(day = 8, year = 2025, example = TRUE, part = 1) {
   verbose <- example
-  input <- 
-    get_file_name(day, year, example) |> 
-    read.csv(header = FALSE)
-  connections <- ifelse(example, 10, 1000)
+  input <- read_table(day, year, example, sep = ",")
+  connections <- ifelse(example, 10L, 1000L)
 
   # get unique pairs of index 
   combs <- combn(nrow(input), 2)

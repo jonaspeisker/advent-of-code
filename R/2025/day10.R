@@ -5,10 +5,7 @@
 # the indicator lights on all of the machines?
 d10p1 <- function(day = 10, year = 2025, example = TRUE) {
   verbose <- example
-  input <- 
-    get_file_name(day, year, example) |>
-    readLines() |> 
-    strsplit(" ")
+  input <- read_split(day, year, example, " ")
   n_machines <- length(input)
   # machine_seq <- 1:length(input)
   
@@ -17,7 +14,7 @@ d10p1 <- function(day = 10, year = 2025, example = TRUE) {
     lapply(`[[`, 1) |>                           # first element are lights
     lapply(\(x) substr(x, 2, nchar(x) - 1) ) |>  # remove brackets
     lapply(\(x) strsplit(x, "") |> unlist() ) |> # split, only one element
-    lapply(\(x) ifelse(x == "#", TRUE, FALSE) )  # boolify
+    lapply(\(x) x == "#" )                       # boolify
   # parse buttons
   buttons <- input |>
     lapply(\(x) x[-c(1, length(x))] ) |>   # all elements except first and last

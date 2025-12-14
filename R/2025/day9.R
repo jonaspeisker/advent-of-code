@@ -5,14 +5,12 @@
 # what is the largest area of any rectangle you can make?
 d9p1 <- function(day = 9, year = 2025, example = TRUE, use_hull = TRUE) {
   verbose <- example
-  input <- 
-    get_file_name(day, year, example) |>
-    read.csv(header=F, col.names = c("x", "y"))
+  input <- read_table(day, year, example, sep = ",")
   
   if (use_hull){ 
     # get unique indeces of convex hull
     hull_ind <- 
-      geometry::convhulln(as.matrix(input)) |>
+      geometry::convhulln(input) |>
       as.integer() |>
       unique()
     hull_points <- input[hull_ind, ]
@@ -29,8 +27,9 @@ d9p1 <- function(day = 9, year = 2025, example = TRUE, use_hull = TRUE) {
   combs <- combn(nrow(hull_points), 2)
   # iterate over pairs (in cols)
   areas <- apply(combs, 2, function(col) { 
-    p1 <- hull_points[col[1], ]; p2 <- hull_points[col[2], ] # select points by row index
-    return((abs(p1$x - p2$x) + 1) * (abs(p1$y - p2$y) + 1))  # return area
+    p1 <- hull_points[col[1], ]
+    p2 <- hull_points[col[2], ] # select points by row index
+    return((abs(p1[1] - p2[1]) + 1) * (abs(p1[2] - p2[2]) + 1))  # return area
   })
   
   return(max(areas))

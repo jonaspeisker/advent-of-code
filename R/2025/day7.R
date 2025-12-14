@@ -4,10 +4,7 @@
 # How many times will the beam be split?
 d7p1 <- function(day = 7, year = 2025, example = TRUE) {
   verbose <- example
-  input <- 
-    get_file_name(day, year, example) |>
-    readLines() |> 
-    strsplit("")
+  input <- read_split(day, year, example)
   
   # iterate over rows
   n_cols <- length(input[[1]])
@@ -31,7 +28,7 @@ d7p1 <- function(day = 7, year = 2025, example = TRUE) {
   }
   
   if (verbose) {
-    print(ifelse(tree, "|", "."))
+    print(ifelse(beams, "|", "."))
   }
   
   return(split_counter)

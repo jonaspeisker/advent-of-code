@@ -2,10 +2,7 @@
 
 d3 <- function(day = 3, year = 2025, example = TRUE, pick_n) {
   verbose <- example
-  input <- 
-    get_file_name(day, year, example) |>
-    readLines() |> 
-    strsplit("") # list of vectors
+  input <- read_split(day, year, example) # list of vectors
   
   # pick n batteries to produce the largest number
   max_joltage <- lapply(input, function(x){
@@ -29,13 +26,13 @@ d3 <- function(day = 3, year = 2025, example = TRUE, pick_n) {
 }
 
 # part 1
-d3(example = TRUE, batteries = 2) == 357
-d3(example = FALSE, batteries = 2) == 17694
+d3(example = TRUE, pick_n = 2) == 357
+d3(example = FALSE, pick_n = 2) == 17694
 # part 2
-d3(example = TRUE, batteries = 12) == 3121910778619
-d3(example = FALSE, batteries = 12) == 175659236361660
+d3(example = TRUE, pick_n = 12) == 3121910778619
+d3(example = FALSE, pick_n = 12) == 175659236361660
 # benchmark
 microbenchmark(
-  d3(example = FALSE, batteries = 2), #  5.7 ms
-  d3(example = FALSE, batteries = 12) # 11.6 ms
+  d3(example = FALSE, pick_n = 2), #  5.7 ms
+  d3(example = FALSE, pick_n = 12) # 11.6 ms
 )

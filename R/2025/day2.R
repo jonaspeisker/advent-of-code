@@ -10,9 +10,7 @@ d2 <- function(
   )
   verbose <- example
   input <- 
-    get_file_name(day, year, example) |>
-    readLines() |>                 # single line
-    strsplit(",") |>               # csv
+    read_split(day, year, example, ",") |> # single line, csv
     unlist() |>                    # unlist list of length 1
     strsplit("-") |>               # list of vectors
     do.call(what = rbind)          # bind to array

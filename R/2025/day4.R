@@ -2,10 +2,7 @@
 
 d4 <- function(day = 4, year = 2025, example = TRUE, part = 1) {
   verbose <- example
-  input <- 
-    get_file_name(day, year, example) |>
-    readLines() |>
-    strsplit("")
+  input <- read_split(day, year, example)
   bin <- # convert to binary matrix
     lapply(input, function(x) { as.integer(x == "@") }) |> 
     do.call(what = rbind)

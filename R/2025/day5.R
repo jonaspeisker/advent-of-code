@@ -2,9 +2,7 @@
 
 d5 <- function(day = 5, year = 2025, example = TRUE, part = 1) {
   verbose <- example
-  input <- 
-    get_file_name(day, year, example) |>
-    readLines() # vector
+  input <- read_input(day, year, example) # vector
   
   sep <- which(input == "") # find separator
   available <- 
