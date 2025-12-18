@@ -102,7 +102,7 @@ read_input <- function(day, year, example = FALSE) {
 #### read input and split ####
 read_split <- function(day, year, example = FALSE, split = "") {
   get_file_name(day, year, example) |> 
-    readLines() |> 
+    readLines(warn = FALSE) |> 
     strsplit(split, fixed = TRUE)
 }
 

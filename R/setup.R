@@ -1,5 +1,5 @@
-for (y in 2015) {
-  for (d in 1:3) {
+for (y in 2025) {
+  for (d in 1:12) {
     download_aoc_input(
       year = y,
       day = d,
