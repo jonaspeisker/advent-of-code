@@ -50,7 +50,7 @@ make_aoc_template <- function(year, day, overwrite = FALSE) {
   
   fn_name <- paste0("d", day)
   template <- sprintf(
-    '# https://adventofcode.com/%d/day/%d
+    '#### https://adventofcode.com/%d/day/%d ####
 
 %s <- function(day = %d, year = %d, example = TRUE, part = 1) {
   verbose <- example
@@ -69,17 +69,17 @@ make_aoc_template <- function(year, day, overwrite = FALSE) {
 }
 
 # part 1
-%s(example = TRUE,  part = 1) ==
+%s(example = TRUE,  part = 1)
 %s(example = FALSE, part = 1)
 
 # part 2
-%s(example = TRUE,  part = 2) ==
+%s(example = TRUE,  part = 2)
 %s(example = FALSE, part = 2)
 
 # benchmark
 microbenchmark::microbenchmark(
-  %s(example = FALSE, part = 1),
-  %s(example = FALSE, part = 2)
+  %s(example = FALSE, part = 1), #
+  %s(example = FALSE, part = 2)  #
 )
 ', 
   year, day,          # URL
