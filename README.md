@@ -1,7 +1,6 @@
 # 🎄 Advent of Code 🎄
 
-## ❄️ 2025 ❄️ 
-![](https://img.shields.io/badge/stars⭐-17-yellow)
+## ❄️ 2025 ❄️ ![](https://img.shields.io/badge/stars⭐-17/24-yellow)
 
 1.  [Secret Entrance](R/2025/2025_day1.R)
 1.  [Gift Shop](R/2025/2025_day2.R)
@@ -16,8 +15,7 @@
 1.  [Reactor](R/2025/2025_day11.R)
 1.  [Christmas Tree Farm](R/2025/2025_day12.R)
 
-## ❄️ 2015 ❄️ 
-![](https://img.shields.io/badge/stars⭐-14-yellow)
+## ❄️ 2015 ❄️ ![](https://img.shields.io/badge/stars⭐-14/50-yellow)
 
 1.  [Not Quite Lisp](R/2015/2015_day1.R)
 1.  [I Was Told There Would Be No Math](R/2015/2015_day2.R)
