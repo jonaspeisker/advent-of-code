@@ -1,4 +1,4 @@
-# https://adventofcode.com/2025/day/7
+#### https://adventofcode.com/2025/day/7 ####
 
 d7 <- function(day = 7, year = 2025, example = TRUE, part = 1) {
   verbose <- example
@@ -30,19 +30,19 @@ d7 <- function(day = 7, year = 2025, example = TRUE, part = 1) {
     beam_prev <- beam_next
   }
   
-  if (verbose) {
+  if (verbose) { # print tree
     p <- input
     p[beams]  <- "|"
-    p <- p |> 
+    p |> 
       cbind("\n") |>
       apply(1, paste0, collapse = " ") |> 
       cat()
-    cat(p)
   }
   
   # How many times will the beam be split?
   if (part == 1) { return(split_counter) }
   
+  # How many different paths are there to the bottom?
   if (part == 2) {
     # make adjacency list
     # name: node
@@ -80,6 +80,7 @@ d7 <- function(day = 7, year = 2025, example = TRUE, part = 1) {
   }
 }
 
+#### count paths ####
 count_paths <- function(node, end_nodes, adj, memo) {
   
   # 1. Memo lookup
@@ -118,6 +119,7 @@ count_paths <- function(node, end_nodes, adj, memo) {
   return(total)
 }
 
+#### run ####
 # part 1
 d7(example = TRUE, part = 1) == 21
 d7(example = FALSE, part = 1) == 1546
