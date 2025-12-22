@@ -2,7 +2,8 @@
 .Rhistory
 .RData
 .Ruserdata
-.Rprofile
+# .Rprofile
 .Rproj
 .github
 advent-of-code-2025.Rproj
+set_aoc_session.R

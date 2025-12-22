@@ -1,6 +1,6 @@
 # 🎄 Advent of Code 🎄
 
-## ❄️ 2025 ❄️ ![](https://img.shields.io/badge/stars⭐-17/24-yellow)
+## ❄️ 2025 ❄️ ![](https://img.shields.io/badge/stars⭐-20/24-yellow)
 
 1.  [Secret Entrance](R/2025/2025_day1.R)
 1.  [Gift Shop](R/2025/2025_day2.R)
@@ -24,8 +24,23 @@
 1.  [Doesn't He Have Intern-Elves For This?](R/2015/2015_day5.R)
 1.  [Probably a Fire Hazard](R/2015/2015_day6.R)
 1.  [Some Assembly Required](R/2015/2015_day7.R)
+<!--
 1.  [](R/2015/2015_day8.R)
 1.  [](R/2015/2015_day9.R)
 1.  [](R/2015/2015_day10.R)
 1.  [](R/2015/2015_day11.R)
 1.  [](R/2015/2015_day12.R)
+1.  [](R/2015/2015_day13.R)
+1.  [](R/2015/2015_day14.R)
+1.  [](R/2015/2015_day15.R)
+1.  [](R/2015/2015_day16.R)
+1.  [](R/2015/2015_day17.R)
+1.  [](R/2015/2015_day18.R)
+1.  [](R/2015/2015_day19.R)
+1.  [](R/2015/2015_day20.R)
+1.  [](R/2015/2015_day21.R)
+1.  [](R/2015/2015_day22.R)
+1.  [](R/2015/2015_day23.R)
+1.  [](R/2015/2015_day24.R)
+1.  [](R/2015/2015_day25.R)
+-->
