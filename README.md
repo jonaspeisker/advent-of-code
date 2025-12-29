@@ -24,8 +24,8 @@
 1.  [Doesn't He Have Intern-Elves For This?](R/2015/2015_day5.R)
 1.  [Probably a Fire Hazard](R/2015/2015_day6.R)
 1.  [Some Assembly Required](R/2015/2015_day7.R)
+1.  [Matchsticks](R/2015/2015_day8.R)
 <!--
-1.  [](R/2015/2015_day8.R)
 1.  [](R/2015/2015_day9.R)
 1.  [](R/2015/2015_day10.R)
 1.  [](R/2015/2015_day11.R)

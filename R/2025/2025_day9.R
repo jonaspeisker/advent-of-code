@@ -8,12 +8,9 @@ d9 <- function(day = 9, year = 2025, part = 1, example = TRUE) {
   if (part == 1) { 
     # largest rectangle must be formed with points on convex hull of all points
     hull <- input[chull(input), ]
-    
-    hull_x <- hull[, 1]
-    hull_y <- hull[, 2]
     areas <- 
-      outer(hull_x, hull_x, function(a, b) abs(a - b) + 1) *
-        outer(hull_y, hull_y, function(a, b) abs(a - b) + 1)
+      outer(hull[, 1], hull[, 1], function(a, b) abs(a - b) + 1) * # x
+        outer(hull[, 2], hull[, 2], function(a, b) abs(a - b) + 1) # y
     # combs <- combn(nrow(hull), 2)
     # areas <- apply(combs, 2, function(col) {
     #   p1 <- hull[col[1], ]
@@ -33,15 +30,14 @@ d9 <- function(day = 9, year = 2025, part = 1, example = TRUE) {
       points |> 
       sf::st_combine() |> 
       sf::st_cast("POLYGON") 
-    # plot(poly)
-    
-    combs <- combn(nrow(points), 2)
+
+    combs <- combn(nrow(input), 2)
     areas <- apply(combs, 2, function(col) {
       p1 <- input[col[1], ]
       p2 <- input[col[2], ] # points index in rows 
       return((abs(p1[1] - p2[1]) + 1) * (abs(p1[2] - p2[2]) + 1))  # area
     })
-
+    
     # consider rectangles in decreasing size
     areas_order <- areas |> order(decreasing = TRUE)
     max_area <- 0
@@ -52,9 +48,7 @@ d9 <- function(day = 9, year = 2025, part = 1, example = TRUE) {
       box <- 
         points[combs[ , comb_col], ] |> 
         sf::st_bbox() |>
-        sf::st_as_sfc() #|>
-        # st_make_grid()
-      # plot(box)
+        sf::st_as_sfc()
 
       if (comb_area > max_area) {
         if (sf::st_covered_by(box, poly, sparse = FALSE)) {
