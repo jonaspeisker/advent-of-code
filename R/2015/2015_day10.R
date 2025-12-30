@@ -1,4 +1,5 @@
 # https://adventofcode.com/2015/day/10
+# https://en.wikipedia.org/wiki/Look-and-say_sequence
 
 d10 <- function(day = 10, year = 2015, example = TRUE, part = 1) {
   verbose <- example

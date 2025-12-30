@@ -1,5 +1,14 @@
 # 🎄 Advent of Code 🎄
 
+[AoC](https://adventofcode.com/2025/about) is a series of programming puzzles created by Eric Wastl.
+
+## ❄️ Helpers ❄️
+
+-   [Setup utils]("R/utils/aoc_setup_utils.R"): functions to download input and make templates
+-   [IO utils]("R/utils/aoc_io_utils.R"): functions to find and read input
+-   [Depth-first search]("R/utils/depth_first_search.R"): count paths in a tree using DFS
+-   [Permutations]("R/utils/permutations.R"): unique orderings of elements of a vector
+
 ## ❄️ 2025 ❄️ ![](https://img.shields.io/badge/stars⭐-20/24-yellow)
 
 1.  [Secret Entrance](R/2025/2025_day1.R)
@@ -15,7 +24,7 @@
 1.  [Reactor](R/2025/2025_day11.R)
 1.  [Christmas Tree Farm](R/2025/2025_day12.R)
 
-## ❄️ 2015 ❄️ ![](https://img.shields.io/badge/stars⭐-14/50-yellow)
+## ❄️ 2015 ❄️ ![](https://img.shields.io/badge/stars⭐-18/50-yellow)
 
 1.  [Not Quite Lisp](R/2015/2015_day1.R)
 1.  [I Was Told There Would Be No Math](R/2015/2015_day2.R)

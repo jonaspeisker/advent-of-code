@@ -1,4 +1,8 @@
 # https://adventofcode.com/2015/day/9
+# travelling salesman problem (TSP)
+# TSP is symmetric, the distance between two nodes is the same 
+# in each opposite direction -> undirected graph
+# find Hamiltonian cycle, ie path that visits each vertex exactly once
 
 d9 <- function(day = 9, year = 2015, example = TRUE, part = 1, prune = FALSE) {
   verbose <- example
@@ -25,7 +29,7 @@ d9 <- function(day = 9, year = 2015, example = TRUE, part = 1, prune = FALSE) {
   
   # permutations of all possible trips
   nodes <- unique(c(edges$from, edges$to))
-  perm <- permutations(nodes)
+  perm <- permutations(nodes) # R/utils/permutations.R
   
   if (prune) { # remove reverse duplicates
     # R uses lexicographic comparison based on alphabetical order
@@ -49,19 +53,6 @@ d9 <- function(day = 9, year = 2015, example = TRUE, part = 1, prune = FALSE) {
   if (part == 2) {
     return(max(route_lengths))
   }
-}
-
-# recursively create permutations of vector x
-permutations <- function(x) {
-  do.call(
-    rbind,
-    lapply(seq_along(x), function(i) {
-      cbind(
-        x[i],
-        permutations(x[-i])
-      )
-    })
-  )
 }
 
 # compute route length
