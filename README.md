@@ -1,3 +1,5 @@
+Moved to [Gitlab](https://gitlab.com/jonaspeisker/advent-of-code)
+
 # 🎄 Advent of Code 🎄
 
 [AoC](https://adventofcode.com/2025/about) is a series of programming puzzles created by Eric Wastl.
